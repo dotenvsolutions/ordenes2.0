@@ -92,7 +92,25 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
-
+        'sybase-odbc' => [
+            'driver' => 'odbc',
+            'host' => env('DB_HOST', 'localhost'),
+            'dsn' => env('DB_DSN'), // odbc: will be prefixed
+            //'port' => env('DB_PORT', '2638'),
+            'database' => env('DB_DATABASE', 'maremy_tienda'),
+            'username' => env('DB_USERNAME', 'dba'),
+            'password' => env('DB_PASSWORD', 'proyecto2022'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'PUBLIC',
+            /*'options' => [
+                'processor' => Illuminate\Database\Query\Processors\Processor::class,
+                'grammar' => [
+                    'query' => Illuminate\Database\Query\Grammars\Grammar::class,
+                    'schema' => Illuminate\Database\Schema\Grammars\Grammar::class,
+                ]
+            ]*/
+        ]
     ],
 
     /*
