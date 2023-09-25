@@ -29,7 +29,7 @@ CREATE TABLE po_roles (
 
 
 CREATE TABLE po_usuarios (
-    uuid CHAR(32) NOT NULL UNIQUE,
+    uuid CHAR(36) NOT NULL UNIQUE,
     codigo INTEGER NOT NULL DEFAULT autoincrement,
     empresa_id INTEGER NOT NULL,
     rol_id INTEGER NULL,
@@ -39,7 +39,7 @@ CREATE TABLE po_usuarios (
     email VARCHAR(250) NOT NULL UNIQUE,
     email_verified_at TIMESTAMP NULL,
     observacion TEXT NULL,
-    "created_at" TIMESTAMP NULL,
+    "created_at" TIMESTAMP NULL DEFAULT CURRENT TIMESTAMP,
     "updated_at" TIMESTAMP NULL DEFAULT CURRENT TIMESTAMP,
     PRIMARY KEY (uuid,empresa_id),
     FOREIGN KEY empresa (empresa_id) REFERENCES po_empresa(codigo) ON DELETE CASCADE, 
@@ -63,7 +63,7 @@ CREATE TABLE po_roles_permisos (
 ) IN "system";
 
 CREATE TABLE po_clientes (
-    uuid CHAR(32) NOT NULL UNIQUE,
+    uuid CHAR(36) NOT NULL UNIQUE,
     codigo INTEGER NOT NULL DEFAULT autoincrement,
     empresa_id INTEGER NOT NULL,
     tipo_identifica INTEGER NOT NULL,
@@ -78,8 +78,8 @@ CREATE TABLE po_clientes (
     observacion TEXT NULL,
     fechai date NULL,
     activo CHAR(1) NOT NULL DEFAULT 'S',
-    user_registro CHAR(32) NULL,
-    user_modifica CHAR(32) NULL,
+    user_registro CHAR(36) NULL,
+    user_modifica CHAR(36) NULL,
     "created_at" TIMESTAMP NULL,
     "updated_at" TIMESTAMP NULL DEFAULT CURRENT TIMESTAMP,
     PRIMARY KEY (uuid,empresa_id),
@@ -88,17 +88,17 @@ CREATE TABLE po_clientes (
 COMMENT ON COLUMN "DBA"."po_clientes"."tipo_identifica" IS 'ACEPTA 1 para CEDULA, 2 para RUC, 3 para PASAPORTE, 4 PARA OTROS';
 
 CREATE TABLE po_proyectos (
-    uuid CHAR(32) NOT NULL UNIQUE,
+    uuid CHAR(36) NOT NULL UNIQUE,
     empresa_id INTEGER NOT NULL,
-    cliente_id CHAR(32) NOT NULL,
+    cliente_id CHAR(36) NOT NULL,
     nombre VARCHAR(750) NOT NULL,
     descripcion_corta VARCHAR(1500) NULL,
     fecha_entrega DATE NOT NULL,
     observacion TEXT NULL,
     icono LONG VARCHAR NULL,
     activo CHAR(1) NOT NULL DEFAULT 'S',
-    user_registro CHAR(32) NULL,
-    user_modifica CHAR(32) NULL,
+    user_registro CHAR(36) NULL,
+    user_modifica CHAR(36) NULL,
     "created_at" TIMESTAMP NULL,
     "updated_at" TIMESTAMP NULL DEFAULT CURRENT TIMESTAMP,
     PRIMARY KEY (uuid,empresa_id),
@@ -118,17 +118,17 @@ CREATE TABLE po_estado_actividad (
 ) IN "system";
 
 CREATE TABLE po_cab_actividad (
-    uuid CHAR(32) NOT NULL UNIQUE,
+    uuid CHAR(36) NOT NULL UNIQUE,
     empresa_id INTEGER NOT NULL,
-    proyecto_id CHAR(32) NOT NULL,
-    user_id CHAR(32) NOT NULL,
+    proyecto_id CHAR(36) NOT NULL,
+    user_id CHAR(36) NOT NULL,
     estado_id INTEGER NOT NULL,
     descripcion VARCHAR(1500) NOT NULL,
     fecha_entrega DATE NOT NULL,
     observacion TEXT NULL,
     icono LONG VARCHAR NULL,
-    user_registro CHAR(32) NULL,
-    user_modifica CHAR(32) NULL,
+    user_registro CHAR(36) NULL,
+    user_modifica CHAR(36) NULL,
     "created_at" TIMESTAMP NULL,
     "updated_at" TIMESTAMP NULL DEFAULT CURRENT TIMESTAMP,
     PRIMARY KEY (uuid,empresa_id),
@@ -141,12 +141,12 @@ CREATE TABLE po_cab_actividad (
 CREATE TABLE po_act_moviento (
     secuencia INTEGER NOT NULL DEFAULT autoincrement,
     empresa_id INTEGER NOT NULL,
-    actividad_id CHAR(32) NOT NULL,
+    actividad_id CHAR(36) NOT NULL,
     estado_id INTEGER NOT NULL,
     fecha_entrega DATE NULL,
     descripcion TEXT NULL,
-    user_registro CHAR(32) NULL,
-    user_modifica CHAR(32) NULL,
+    user_registro CHAR(36) NULL,
+    user_modifica CHAR(36) NULL,
     "created_at" TIMESTAMP NULL,
     "updated_at" TIMESTAMP NULL DEFAULT CURRENT TIMESTAMP,
     PRIMARY KEY (secuencia,empresa_id),
