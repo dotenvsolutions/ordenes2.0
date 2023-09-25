@@ -1,0 +1,3 @@
+ordenes-api/vendor
+ordenes-api/vendor/*
+ordenes-api/.env
