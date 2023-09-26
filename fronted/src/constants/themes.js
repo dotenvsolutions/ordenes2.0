@@ -11,7 +11,12 @@ export default {
     dark: "#d9534f",
     contrastText: "#fff",
   },
-  success: {},
+  success: {
+    main: "#5cb85c",
+    light: "#5cb85c",
+    dark: "#5cb85c",
+    contrastText: "#fff",
+  },
   warning: {
     main: "#f0ad4e",
     light: "#f0ad4e",

@@ -1,4 +1,4 @@
-import { Input, InputPassword } from "../components/inputs";
+import { GeneralInputText, InputPassword } from "../components/inputs";
 import { useFormik } from "formik";
 import { LoginSchema } from "../schemas/login-schema";
 import { VerificarUsuario } from "../services/auth";
@@ -77,19 +77,19 @@ const Auth = () => {
             <h1 className="text-3xl font-bold text-center">
               Por favor, inicia sesión
             </h1>
-            <Input
-              type="text"
-              placeholder="Ingresa tu usuario"
-              value={values.usuario}
-              name="usuario"
-              onChange={(e) => setFieldValue("usuario", e.target.value)}
-              error={errors.usuario}
-              autoFocus
-              label="Usuario"
-              required
-              disabled={values.step === 2 || loading}
-              loading={loading}
-            />
+            <div className="w-full">
+              <label htmlFor="nombres" className="font-bold">
+                Nombres
+              </label>
+              <GeneralInputText
+                id="nombres"
+                value={values.nombre}
+                onChange={(e) => setFieldValue("usuario", e.target.value)}
+                required
+                error={errors.usuario}
+                submitted={loading || errors.usuario}
+              />
+            </div>
             <button
               className={`bg-primary w-full max-w-xs py-2 rounded font-bold text-white ${
                 (errors.usuario || loading) && "opacity-50 cursor-not-allowed"
@@ -118,17 +118,19 @@ const Auth = () => {
               Regresar
             </button>
 
-            <Input
-              type="password"
-              placeholder="Ingresa tu contraseña"
-              value={values.password}
-              name="password"
-              onChange={(e) => setFieldValue("password", e.target.value)}
-              error={errors.password}
-              label="Contraseña"
-              disabled={values.step === 1 || loading}
-              loading={loading}
-            />
+            <div className="w-full">
+              <label htmlFor="password" className="font-bold">
+                Contraseña
+              </label>
+              <InputPassword
+                id="password"
+                value={values.password}
+                onChange={(e) => setFieldValue("password", e.target.value)}
+                required
+                error={errors.password}
+                submitted={loading || errors.password}
+              />
+            </div>
 
             <button
               className={`bg-primary w-full max-w-xs py-2 rounded font-bold text-white ${

@@ -1,59 +1,21 @@
 import { useState } from "react";
 import { InputText } from "primereact/inputtext";
-import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-
-export const Input = ({
-  type,
-  name,
-  placeholder,
-  value,
-  onChange,
-  keyfilter,
-  error,
-  label,
-  loading,
-  disabled,
-  ...props
-}) => {
-  return (
-    <div className="w-full">
-      {label && (
-        <div className="mb-2">
-          <label className="font-bold">{label}</label>
-        </div>
-      )}
-      <InputText
-        type={type}
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={loading ? () => {} : onChange}
-        keyfilter={keyfilter}
-        className={`border border-gray-300 bg-gray-100 rounded-md w-full py-2 outline-none focus:border-primary p-inputtext-sm ${
-          error && !loading ? "p-invalid" : ""
-        }`}
-        disabled={loading || disabled}
-        {...props}
-      />
-      {error && !loading && (
-        <small className="text-red-500 self-start">{error}</small>
-      )}
-    </div>
-  );
-};
+import { classNames } from "primereact/utils";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Calendar } from "primereact/calendar";
+import { sexoOptions } from "../../constants/global";
 
 export const InputPassword = ({
-  name,
-  placeholder,
+  id,
   value,
   onChange,
   label,
   error,
-  loading,
   disabled,
+  submitted,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
   return (
     <div className="relative w-full">
       {label && (
@@ -63,34 +25,27 @@ export const InputPassword = ({
       )}
       <InputText
         type={showPassword ? "text" : "password"}
-        placeholder={placeholder}
-        name={name}
+        id={id}
         value={value}
         onChange={onChange}
-        className="border border-gray-300 bg-gray-100 rounded-md w-full py-2 outline-none focus:border-blue-500"
-        disabled={loading || disabled}
+        disabled={disabled}
+        className={`${classNames({ "p-invalid": submitted && !value })} ${
+          disabled ? "cursor-not-allowed" : null
+        }}`}
+        style={{
+          width: "100%",
+          height: 40,
+        }}
       />
-     {/*  <button
+      {/*  <button
         type="button"
         onClick={() => setShowPassword(!showPassword)}
         className={`absolute right-2 ${error ? 'bottom-3' : 'bottom-9'}`}
       >
         {showPassword ? "🙈" : "👁️"}
       </button> */}
-      {error && !loading && (
-        <small className="text-red-500 self-start">{error}</small>
-      )}
+      {submitted && !value && <small className="p-error">{error}</small>}
     </div>
-  );
-};
-
-export const CalendarImput = () => {
-  return (
-    <Calendar
-      locale="es"
-      placeholder="Fecha de nacimiento"
-      className="border border-gray-300 bg-gray-100 rounded-md w-full outline-none focus:border-blue-500 p-inputtext-sm"
-    />
   );
 };
 
@@ -105,3 +60,103 @@ export const Select = ({ placeholder, value, onChange, options }) => {
     />
   );
 };
+
+export const GeneralInputText = ({
+  id,
+  value,
+  onChange,
+  submitted,
+  error,
+  disabled,
+  ...props
+}) => (
+  <>
+    <InputText
+      id={id}
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+      className={`${classNames({ "p-invalid": submitted && !value })} ${
+        disabled ? "cursor-not-allowed" : null
+      }}`}
+      style={{
+        width: "100%",
+        height: 40,
+      }}
+      {...props}
+    />
+    {submitted && !value && <small className="p-error">{error}</small>}
+  </>
+);
+
+export const GeneralTextArea = ({
+  id,
+  value,
+  onChange,
+  submitted,
+  error,
+  disabled,
+  ...props
+}) => (
+  <>
+    <InputTextarea
+      id={id}
+      value={value}
+      onChange={onChange}
+      className={`${classNames({ "p-invalid": submitted && !value })} ${
+        disabled ? "cursor-not-allowed" : null
+      }}`}
+      rows={3}
+      cols={20}
+      {...props}
+    />
+    {submitted && !value && <small className="p-error">{error}</small>}
+  </>
+);
+
+export const CalendarInput = ({
+  id,
+  value,
+  onChange,
+  submitted,
+  error,
+  disabled,
+  ...props
+}) => (
+  <>
+    <Calendar
+      id={id}
+      value={value}
+      locale="es"
+      onChange={onChange}
+      dateFormat="dd/mm/yy"
+      className={`${classNames({ "p-invalid": submitted && !value })} ${
+        disabled ? "cursor-not-allowed" : null
+      }}`}
+      style={{
+        width: "100%",
+        height: 40,
+      }}
+      {...props}
+    />
+    {submitted && !value && <small className="p-error">{error}</small>}
+  </>
+);
+
+export const SexoSelect = ({ value, onChange, submitted, error }) => (
+  <>
+    <Dropdown
+      value={value}
+      options={sexoOptions}
+      onChange={onChange}
+      placeholder="Seleccione"
+      className={`${classNames({ "p-invalid": submitted && !value })}`}
+      style={{
+        width: "100%",
+        height: 40,
+        alignItems: "center",
+      }}
+    />
+    {submitted && !value && <small className="p-error">{error}</small>}
+  </>
+);
